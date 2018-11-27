@@ -11,4 +11,6 @@ public interface UserInfoService {
     UserInfoDTO getUserInfo(String userAccount) throws Exception;
 
     ResponseData<UserInfoDTO> loginValidate(String userAccount, String password);
+
+    ResponseData register(String userAccount, String password, String passwordConfirm);
 }

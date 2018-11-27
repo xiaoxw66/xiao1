@@ -10,14 +10,14 @@ import com.xiao.common.util.ResponseUtil;
 import com.xiao.common.util.StringUtil;
 import com.xiao.user.dto.UserInfoDTO;
 import com.xiao.user.service.UserInfoService;
-import com.xiao.user.service.validate.UserValidate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
@@ -28,20 +28,12 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
-    @Autowired
-    private UserValidate userValidate;
-
     @AccessAop
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public ResponseData<UserInfoDTO> getUserInfo(@RequestParam("userAccount") String userAccount) {
+    public ResponseData<UserInfoDTO> getUserInfo(HttpSession httpSession) {
         ResponseData<UserInfoDTO> responseData = ResponseUtil.getInstance();
+        String userAccount = StringUtil.transformNullStr(httpSession.getAttribute(Constants.USER_ACCOUNT));
         try {
-            ResponseData checkRes = userValidate.getUserInfoValidte(userAccount);
-            if (StringUtil.invalid(checkRes)) {
-                log.info("查询用户信息入参校验失败,用户账号不能为空");
-                return checkRes;
-            }
-
             UserInfoDTO userInfo = userInfoService.getUserInfo(userAccount);
             log.info("userInfo:{}", JsonUtil.toJSONString(userInfo));
             if (ItemValidate.isEmpty(userInfo)) {

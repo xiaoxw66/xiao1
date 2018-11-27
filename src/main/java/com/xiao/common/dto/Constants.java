@@ -13,9 +13,17 @@ public class Constants {
     public static final String USER_ID = "userId";
     public static final String USER_DTO = "userDto";
     public static final String USER_NAME = "userName";
+    public static final String USER_ACCOUNT = "userAccount";
 
-
+    // MD5加密用的字符集
     public static final String UTF8 = "UTF-8";
 
-    public static final String PASSWORD_SUFFIX = "YEMU";
+    // 用户密码在后面添加后缀
+    public static final String PASSWORD_SUFFIX = "YeMu";
+
+    // 长度校验用的常量
+    public static final int STRING_LENGTH_6 = 6;
+    public static final int STRING_LENGTH_16 = 16;
+
+
 }

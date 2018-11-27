@@ -4,6 +4,7 @@ import com.xiao.common.dto.Constants;
 import com.xiao.common.dto.ResponseData;
 import com.xiao.common.session.SessionHelper;
 import com.xiao.common.util.ItemValidate;
+import com.xiao.common.util.JsonUtil;
 import com.xiao.common.util.ResponseUtil;
 import com.xiao.common.util.StringUtil;
 import com.xiao.user.dto.UserInfoDTO;
@@ -58,6 +59,7 @@ public class LoginAction {
             session.setAttribute(Constants.USER_ID, userId);
             session.setAttribute(Constants.USER_NAME, userInfoDto.getUserName());
             session.setAttribute(Constants.USER_DTO, userInfoDto);
+            session.setAttribute(Constants.USER_ACCOUNT, userInfoDto.getUserAccount());
             log.info("登录成功,账号:{}", userAccount);
 
             // 登录成功 从map中获取session
@@ -113,14 +115,45 @@ public class LoginAction {
     }
 
     /**
+     * @Description 校验账号是否存在
+     * @Author yexiaomu
+     * @Date 2018/11/27 21:39
+     * @Param [userAccount]
+     * @Return com.xiao.common.dto.ResponseData
+     **/
+    @RequestMapping(value = "/isExistAccount", method = RequestMethod.GET)
+    public ResponseData isExistAccount(String userAccount) {
+        try {
+            ResponseData checkRes = userValidate.getUserInfoValidte(userAccount);
+            if (StringUtil.invalid(checkRes)) {
+                log.info("查询用户信息入参校验失败,用户账号不能为空");
+                return checkRes;
+            }
+            UserInfoDTO userInfo = userInfoService.getUserInfo(userAccount);
+            log.info("userInfo:{}", JsonUtil.toJSONString(userInfo));
+            if (ItemValidate.isEmpty(userInfo)) {
+                return ResponseUtil.getInstance(Constants.SUCCESS);
+            } else {
+                return ResponseUtil.getInstance(Constants.FAILED);
+            }
+        } catch (Exception e) {
+            log.error("校验用户是否存在异常,userAccount:{}", userAccount, e);
+            return ResponseUtil.getInstance(Constants.FAILED);
+        }
+
+    }
+
+    /**
      * 账号注册
      *
      * @return
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseData register(String userAccount, String password, String confirmPassword) {
-
-
-        return null;
+        ResponseData responseData = userValidate.registerValidate(userAccount, password, confirmPassword);
+        if (StringUtil.invalid(responseData)) {
+            return responseData;
+        }
+        return userInfoService.register(userAccount, password, confirmPassword);
     }
 }

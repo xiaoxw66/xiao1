@@ -31,6 +31,8 @@ public class UserValidate {
     public ResponseData getUserInfoValidte(String userAccount) {
         if (StringUtil.isEmptyStr(userAccount)) {
             return ResponseUtil.getInstance(Constants.FAILED, "用户账号不能为空");
+        } else if (StringUtil.checkEmail(userAccount)) {
+            return ResponseUtil.getInstance(Constants.FAILED, "请输入正确邮箱");
         }
         return ResponseUtil.getInstance(Constants.SUCCESS);
     }
@@ -44,11 +46,16 @@ public class UserValidate {
      * @return
      */
     public ResponseData registerValidate(String userAccount, String password, String passwordConfirm) {
-        if (StringUtil.checkEmail(userAccount)) {
-
+        if (StringUtil.isEmptyArr(userAccount, password, passwordConfirm)) {
+            return ResponseUtil.getInstance(Constants.FAILED, "用户账号密码不能为空");
+        } else if (StringUtil.checkEmail(userAccount)) {
+            return ResponseUtil.getInstance(Constants.FAILED, "请输入正确邮箱");
+        } else if (StringUtil.isNotEqual(password, passwordConfirm)) {
+            return ResponseUtil.getInstance(Constants.FAILED, "两次填写的密码不一致");
+        } else if (password.length() >= Constants.STRING_LENGTH_6 && password.length() <= Constants.STRING_LENGTH_16) {
+            return ResponseUtil.getInstance(Constants.FAILED, "密码长度为6~16个字符，区分大小写");
         }
-
-        return ResponseUtil.getInstance();
+        return ResponseUtil.getInstance(Constants.SUCCESS);
     }
 
 

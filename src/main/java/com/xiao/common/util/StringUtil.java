@@ -9,6 +9,22 @@ import java.util.regex.Pattern;
 public class StringUtil {
 
     /**
+     * @Description 判断多个字符串是否为空
+     * @Author yexiaomu
+     * @Date 2018/11/27 19:47
+     * @Param [args]
+     * @Return boolean
+     **/
+    public static boolean isEmptyArr(Object... args) {
+        for (Object o : args) {
+            if (isEmptyStr(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @Description 判断字符串是否为空
      * @Author yexiaomu
      * @Date 2018/11/26 20:45
