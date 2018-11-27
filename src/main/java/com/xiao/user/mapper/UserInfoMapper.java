@@ -7,6 +7,6 @@ public interface UserInfoMapper {
 
     UserInfoDTO getUserInfoLogin(@Param("userAccount") String userAccount, @Param("password") String password) throws Exception;
 
-    UserInfoDTO getUserInfo(String userAccount) throws Exception;
+    UserInfoDTO getUserInfo(@Param("userAccount") String userAccount) throws Exception;
 
 }
