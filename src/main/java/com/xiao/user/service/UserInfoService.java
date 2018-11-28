@@ -13,4 +13,6 @@ public interface UserInfoService {
     ResponseData<UserInfoDTO> loginValidate(String userAccount, String password);
 
     ResponseData register(String userAccount, String password, String passwordConfirm);
+
+    ResponseData isExistAccount(String userAccount);
 }

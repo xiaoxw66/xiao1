@@ -8,8 +8,6 @@ public class UserInfoDTO extends EntityDTO {
 
     private static final long serialVersionUID = 120490905062695565L;
 
-    private String xxwUserInfoId;
-
     private String userId;
 
     private String userAccount;

@@ -123,24 +123,12 @@ public class LoginAction {
      **/
     @RequestMapping(value = "/isExistAccount", method = RequestMethod.GET)
     public ResponseData isExistAccount(String userAccount) {
-        try {
-            ResponseData checkRes = userValidate.getUserInfoValidte(userAccount);
-            if (StringUtil.invalid(checkRes)) {
-                log.info("查询用户信息入参校验失败,用户账号不能为空");
-                return checkRes;
-            }
-            UserInfoDTO userInfo = userInfoService.getUserInfo(userAccount);
-            log.info("userInfo:{}", JsonUtil.toJSONString(userInfo));
-            if (ItemValidate.isEmpty(userInfo)) {
-                return ResponseUtil.getInstance(Constants.SUCCESS);
-            } else {
-                return ResponseUtil.getInstance(Constants.FAILED);
-            }
-        } catch (Exception e) {
-            log.error("校验用户是否存在异常,userAccount:{}", userAccount, e);
-            return ResponseUtil.getInstance(Constants.FAILED);
+        ResponseData checkRes = userValidate.getUserInfoValidte(userAccount);
+        if (StringUtil.invalid(checkRes)) {
+            log.info("查询用户信息入参校验失败,用户账号不能为空");
+            return checkRes;
         }
-
+        return userInfoService.isExistAccount(userAccount);
     }
 
     /**

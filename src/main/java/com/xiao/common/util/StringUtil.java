@@ -133,7 +133,7 @@ public class StringUtil {
      **/
     public static boolean checkEmail(String email) {
         try {
-            String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+            String check = "^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$";
             Pattern regex = Pattern.compile(check);
             Matcher matcher = regex.matcher(email);
             return matcher.matches();

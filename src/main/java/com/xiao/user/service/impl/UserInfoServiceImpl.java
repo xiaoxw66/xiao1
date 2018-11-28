@@ -1,8 +1,10 @@
 package com.xiao.user.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.xiao.common.dto.Constants;
 import com.xiao.common.dto.ResponseData;
 import com.xiao.common.util.ItemValidate;
+import com.xiao.common.util.JsonUtil;
 import com.xiao.common.util.MD5Util;
 import com.xiao.common.util.ResponseUtil;
 import com.xiao.user.dto.UserInfoDTO;
@@ -82,10 +84,40 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public ResponseData register(String userAccount, String password, String passwordConfirm) {
         UserInfoPasswordDTO userInfoPasswordDTO = new UserInfoPasswordDTO();
-        userInfoPasswordDTO.setPassword(password);
-        userInfoPasswordDTO.setUserAccount(userAccount);
-
-        return null;
+        try {
+            userInfoPasswordDTO.setPassword(MD5Util.MD5EncodePassword(password));
+            userInfoPasswordDTO.setUserAccount(userAccount);
+            userInfoPasswordDTO.setCreatedBy(userAccount);
+            userInfoPasswordDTO.setUpdatedBy(userAccount);
+            userInfoMapper.addUser(userInfoPasswordDTO);
+            log.info("账号注册完成:{}", JSON.toJSONString(userInfoPasswordDTO));
+            return ResponseUtil.getInstance(Constants.SUCCESS, "注册成功");
+        } catch (Exception e) {
+            log.error("注册账号异常:{}", JSON.toJSONString(userInfoPasswordDTO), e);
+            return ResponseUtil.getInstance(Constants.FAILED, "注册账号异常");
+        }
     }
 
+    /**
+     * @Description 注册时校验账号是否存在 success 为不存在
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/11/28 16:38
+     * @Param [userAccount]
+     * @Return com.xiao.common.dto.ResponseData
+     **/
+    @Override
+    public ResponseData isExistAccount(String userAccount) {
+        try {
+            UserInfoDTO userInfo = this.getUserInfo(userAccount);
+            log.info("isExistAccount userInfo:{}", JsonUtil.toJSONString(userInfo));
+            if (ItemValidate.isEmpty(userInfo)) {
+                return ResponseUtil.getInstance(Constants.SUCCESS);
+            } else {
+                return ResponseUtil.getInstance(Constants.FAILED);
+            }
+        } catch (Exception e) {
+            log.error("校验用户是否存在异常,userAccount:{}", userAccount, e);
+            return ResponseUtil.getInstance(Constants.FAILED);
+        }
+    }
 }

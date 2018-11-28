@@ -35,6 +35,31 @@
          where xui.user_account = #{userAccount,jdbcType=VARCHAR}
     </select>
 
+	<!--SQL语句中不能有注释-->
+	<insert id="addUser" parameterType="com.xiao.user.dto.UserInfoPasswordDTO">
+	INSERT INTO xxw_user_info (
+		created_by,
+		created_date,
+		updated_by,
+		updated_date,
+		user_account,
+		user_name,
+		age,
+		password
+	)
+	VALUES
+		(
+			#{createdBy,jdbcType=VARCHAR},
+			now(),
+			#{updatedBy,jdbcType=VARCHAR},
+			now(),
+			#{userAccount,jdbcType=VARCHAR},
+			#{userName,jdbcType=VARCHAR},
+			#{age,jdbcType=INTEGER},
+			#{password,jdbcType=VARCHAR}
+		)
+	</insert>
+
     <!--<resultMap id="BaseResultMap" type="com.winter.model.User">-->
     <!--<id column="user_id" property="userId" jdbcType="INTEGER"/>-->
     <!--<result column="user_name" property="userName" jdbcType="VARCHAR"/>-->
