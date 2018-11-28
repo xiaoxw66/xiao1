@@ -5,7 +5,6 @@
     <!-- 根据账号密码获取用户信息,登录和修改密码可用-->
     <select id="getUserInfoLogin" resultType="com.xiao.user.dto.UserInfoDTO">
          select
-			xui.xxw_user_info_id as xxwUserInfoId,
 			xui.user_id as userId,
 			xui.user_account as userAccount,
 			xui.user_name as userName,
@@ -22,7 +21,6 @@
     <!-- 根据账号获取用户信息-->
     <select id="getUserInfo" resultType="com.xiao.user.dto.UserInfoDTO">
          select
-			xui.xxw_user_info_id as xxwUserInfoId,
 			xui.user_id as userId,
 			xui.user_account as userAccount,
 			xui.user_name as userName,
