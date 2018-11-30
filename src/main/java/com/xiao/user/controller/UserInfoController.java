@@ -48,5 +48,15 @@ public class UserInfoController {
         return responseData;
     }
 
-
+    /**
+     * 账号登出
+     *
+     * @param httpSession
+     * @return
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ResponseData logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return ResponseUtil.getInstance(Constants.SUCCESS, "登出成功");
+    }
 }

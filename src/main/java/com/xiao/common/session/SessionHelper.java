@@ -8,7 +8,7 @@ import java.util.Map;
 public class SessionHelper {
 
     // 创建一个map存放登录的用户和对应session
-    private static Map<String, HttpSession> userSessionMap = new HashMap<>();
+    private static Map<String, HttpSession> userSessionMap = new HashMap<>(128);
 
     public static Map<String, HttpSession> getInstance() {
         return userSessionMap;

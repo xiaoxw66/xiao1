@@ -3,26 +3,22 @@ package com.xiao.user.controller;
 import com.xiao.common.dto.Constants;
 import com.xiao.common.dto.ResponseData;
 import com.xiao.common.session.SessionHelper;
-import com.xiao.common.util.ItemValidate;
-import com.xiao.common.util.JsonUtil;
-import com.xiao.common.util.ResponseUtil;
-import com.xiao.common.util.StringUtil;
+import com.xiao.common.util.*;
 import com.xiao.user.dto.UserInfoDTO;
 import com.xiao.user.service.UserInfoService;
 import com.xiao.user.service.validate.UserValidate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/login")
 @EnableAutoConfiguration
 public class LoginAction {
 
@@ -33,66 +29,74 @@ public class LoginAction {
     private UserValidate userValidate;
 
     /**
-     * 账号登录
-     *
-     * @param userAccount
-     * @param password
-     * @param session
-     * @return
-     */
+     * @Description 账号登录
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/11/29 11:26
+     * @Param [userAccount, password, validateCode, request]
+     * @Return com.xiao.common.dto.ResponseData
+     **/
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseData login(@RequestParam("userAccount") String userAccount, @RequestParam("password") String password, HttpSession session) {
-        ResponseData responseData = new ResponseData();
+    public ResponseData login(@RequestParam("userAccount") String userAccount, @RequestParam("password") String password,
+                              @RequestParam("validateCode") String validateCode, HttpServletRequest request) {
+        HttpSession currentSession = request.getSession();
+        ResponseData responseData = ResponseUtil.getInstance();
         ResponseData responseValidate = userValidate.loginValidate(userAccount, password);
         if (StringUtil.invalid(responseValidate)) {
             log.info("校验失败,登录账号或密码不能为空");
             return responseValidate;
         }
+        // 登录校验验证码 // TODO 登录暂时取消验证码
+        //ResponseData checkValidateCode = this.checkValidateCode(validateCode, currentSession);
+        //if (StringUtil.invalid(checkValidateCode)) {
+        //    return checkValidateCode;
+        //}
+
         // 如果同一个session登录两个账号,或者说是多次登录
         // 则把已经登录的sessionId获取到
-        Object oldUserId = session.getAttribute(Constants.USER_ID);
+        Object oldUserId = currentSession.getAttribute(Constants.USER_ID);
 
         ResponseData<UserInfoDTO> userInfoDtoRes = userInfoService.loginValidate(userAccount, password);
         if (StringUtil.validate(userInfoDtoRes)) {
             UserInfoDTO userInfoDto = userInfoDtoRes.getData();
-            String userId = userInfoDto.getUserId();
-            session.setAttribute(Constants.USER_ID, userId);
-            session.setAttribute(Constants.USER_NAME, userInfoDto.getUserName());
-            session.setAttribute(Constants.USER_DTO, userInfoDto);
-            session.setAttribute(Constants.USER_ACCOUNT, userInfoDto.getUserAccount());
+            String currentUserId = userInfoDto.getUserId();
+            currentSession.setAttribute(Constants.USER_ID, currentUserId);
+            currentSession.setAttribute(Constants.USER_NAME, userInfoDto.getUserName());
+            currentSession.setAttribute(Constants.USER_DTO, userInfoDto);
+            currentSession.setAttribute(Constants.USER_ACCOUNT, userInfoDto.getUserAccount());
+            currentSession.removeAttribute(RandomValidateCodeUtil.RANDOM_CODE_KEY);
             log.info("登录成功,账号:{}", userAccount);
 
             // 登录成功 从map中获取session
+            // 用当前登录userId从静态map中获取
             // 获取到session对象不为空则表示之前已经登录过
-            log.info("当前登录sessionId:{}", session.getId());
-            HttpSession oldSession = SessionHelper.getSession(userId);
+            log.info("当前登录sessionId:{}", currentSession.getId());
+            HttpSession oldSession = SessionHelper.getSession(currentUserId);
             // 两种场景:
             // 1.同一个浏览器登录不同个的账号
-            Object newUserId = session.getAttribute(Constants.USER_ID);
             // 如果同一个session登录两个账号则 把已经登录的和当前登录的userId拿出来比较
             // 不相同则把旧的session从map中删除  并且旧的不为空,如果为空表示第一次登录
-            if (StringUtil.isNotEqual(oldUserId, newUserId) && StringUtil.isNotEmptyStr(oldUserId)) {
-                log.info("如果同一个session登录两个账号则 把已经登录的和当前登录的userId拿出来比较,不相同则把旧的session从map中删除,oldUserId:{}", oldUserId);
+            if (StringUtil.isNotEqual(oldUserId, currentUserId) && StringUtil.isNotEmptyStr(oldUserId)) {
+                log.info("如果同一个session登录两个账号则 把已经登录的和当前登录的userId拿出来比较,不相同则把旧的session从map中删除,oldUserId:{},currentUserId:", oldUserId, currentUserId);
                 SessionHelper.removeSession(StringUtil.transformNullStr(oldUserId));
             }
 
             if (ItemValidate.isNotEmpty(oldSession)) {
                 // 2.不同的浏览器登录同一个账号
                 String oldSessionId = oldSession.getId();
-                String newSessionId = session.getId();
+                String newSessionId = currentSession.getId();
                 // 两个sessionId不相等 则将旧session销毁,
                 // 并将当前session放入map
                 // 相等的表示当前session多次登录 保持不变
                 if (StringUtil.isNotEqual(oldSessionId, newSessionId)) {
                     oldSession.invalidate();
                     log.info("loginAction销毁session之后");
-                    SessionHelper.addSession(userId, session);
+                    SessionHelper.addSession(currentUserId, currentSession);
                 } else {
                     log.info("同一个账号多次登录");
                 }
             } else {
                 // 为空 则表示之前没有登录 将当前session放入map
-                SessionHelper.addSession(userId, session);
+                SessionHelper.addSession(currentUserId, currentSession);
             }
             responseData.setCode(Constants.SUCCESS);
         } else {
@@ -100,18 +104,6 @@ public class LoginAction {
         }
         log.info("输出下sessionMap:{}", SessionHelper.getInstance());
         return responseData;
-    }
-
-    /**
-     * 账号登出
-     *
-     * @param httpSession
-     * @return
-     */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ResponseData logout(HttpSession httpSession) {
-        httpSession.invalidate();
-        return ResponseUtil.getInstance(Constants.SUCCESS, "登出成功");
     }
 
     /**
@@ -137,11 +129,61 @@ public class LoginAction {
      * @return
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseData register(String userAccount, String password, String confirmPassword) {
-        ResponseData responseData = userValidate.registerValidate(userAccount, password, confirmPassword);
+    public ResponseData register(String userAccount, String password, String confirmPassword, String validateCode, HttpServletRequest request) {
+        ResponseData responseData = userValidate.registerValidate(userAccount, password, confirmPassword, validateCode);
         if (StringUtil.invalid(responseData)) {
             return responseData;
         }
+        ResponseData checkValidateCode = this.checkValidateCode(validateCode, request.getSession());
+        if (StringUtil.invalid(checkValidateCode)) {
+            return checkValidateCode;
+        }
         return userInfoService.register(userAccount, password, confirmPassword);
+    }
+
+    /**
+     * @Description 生成验证码
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/11/29 11:14
+     * @Param [request, response]
+     * @Return void
+     **/
+    @RequestMapping(value = "/getValidateCode", method = RequestMethod.GET)
+    public void getVerify(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.setContentType("image/jpeg");//设置相应类型,告诉浏览器输出的内容为图片
+            response.setHeader("Pragma", "No-cache");//设置响应头信息，告诉浏览器不要缓存此内容
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expire", 0);
+            RandomValidateCodeUtil randomValidateCode = new RandomValidateCodeUtil();
+            randomValidateCode.getRandomCode(request, response);//输出验证码图片方法
+        } catch (Exception e) {
+            log.error("获取验证码失败>>>>   ", e);
+        }
+    }
+
+    /**
+     * @Description 校验验证码 不区分大小写
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/11/29 11:13
+     * @Param [validateCode, session]
+     * @Return boolean
+     **/
+    @RequestMapping(value = "/checkValidateCode", method = RequestMethod.POST)
+    public ResponseData checkValidateCode(@RequestParam("validateCode") String validateCode, HttpSession session) {
+        try {
+            //从session中获取生成的验证码
+            String sessionValidateCode = StringUtil.transformNullStr(session.getAttribute(RandomValidateCodeUtil.RANDOM_CODE_KEY));
+            log.info("验证码校验入参:{},session中验证码:{}", validateCode, sessionValidateCode);
+            if (StringUtil.isEqual(StringUtil.toUpperCase(validateCode), sessionValidateCode)) {
+                log.info("验证码校验成功");
+                return ResponseUtil.getInstance(Constants.SUCCESS);
+            }
+            log.info("验证码校验失败");
+            return ResponseUtil.getInstance(Constants.FAILED, "验证码校验失败");
+        } catch (Exception e) {
+            log.error("验证码校验异常", e);
+            return ResponseUtil.getInstance(Constants.FAILED, "验证码校验异常");
+        }
     }
 }

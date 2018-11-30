@@ -1,8 +1,4 @@
-package com.xiao.common.aop;
-
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package com.xiao.common.filter;
 
 //@Component
 //@Configuration

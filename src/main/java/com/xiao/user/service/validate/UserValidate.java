@@ -22,6 +22,7 @@ public class UserValidate {
      * @return
      */
     public ResponseData loginValidate(String userAccount, String password) {
+
         if (StringUtil.isEmptyStr(userAccount) || StringUtil.isEmptyStr(password)) {
             return ResponseUtil.getInstance(Constants.FAILED, "用户账号和密码不能为空");
         }
@@ -51,8 +52,8 @@ public class UserValidate {
      * @param passwordConfirm
      * @return
      */
-    public ResponseData registerValidate(String userAccount, String password, String passwordConfirm) {
-        if (StringUtil.isEmptyArr(userAccount, password, passwordConfirm)) {
+    public ResponseData registerValidate(String userAccount, String password, String passwordConfirm, String validateCode) {
+        if (StringUtil.isEmptyArr(userAccount, password, passwordConfirm, validateCode)) {
             return ResponseUtil.getInstance(Constants.FAILED, "用户账号密码不能为空");
         } else if (!StringUtil.checkEmail(userAccount)) {
             return ResponseUtil.getInstance(Constants.FAILED, "请输入正确邮箱");

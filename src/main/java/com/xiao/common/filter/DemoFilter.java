@@ -1,9 +1,8 @@
-package com.xiao.common.aop;
+package com.xiao.common.filter;
 
 import com.xiao.common.dto.Constants;
 import com.xiao.common.dto.ResponseData;
 import com.xiao.common.util.StringUtil;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- * @author 株洲健坤北大青鸟 周钢
- */
 //@Component
-public class GetContentFilter implements Filter {
+public class DemoFilter implements Filter {
     @Override
     public void destroy() {
         // TODO Auto-generated method stub
@@ -47,8 +43,4 @@ public class GetContentFilter implements Filter {
         // TODO Auto-generated method stub
     }
 
-    private void login(ServletRequest request, ServletResponse response) {
-
-
-    }
 }

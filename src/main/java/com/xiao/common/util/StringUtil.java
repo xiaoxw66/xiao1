@@ -141,4 +141,26 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * @Description 字符串转大写
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/11/29 11:45
+     * @Param [str]
+     * @Return java.lang.String
+     **/
+    public static String toUpperCase(String str) {
+        return transformNullStr(str).toUpperCase();
+    }
+
+    /**
+     * @Description 字符串转小写
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/11/29 11:46
+     * @Param [str]
+     * @Return java.lang.String
+     **/
+    public static String toLowerCase(String str) {
+        return transformNullStr(str).toLowerCase();
+    }
 }

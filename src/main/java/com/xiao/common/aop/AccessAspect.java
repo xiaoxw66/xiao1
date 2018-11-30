@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 /**
  * 接口请求校验
  */
-@Order(1)
+@Order(2)
 @Aspect
 @Component
 public class AccessAspect {
