@@ -24,7 +24,6 @@ public class LotteryServiceImpl {
         // 对商品按照中奖概率分组
 
 
-
     }
 
 }
