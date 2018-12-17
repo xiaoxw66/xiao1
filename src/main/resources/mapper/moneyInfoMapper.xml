@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiao.money.mapper.M">
+
+    <!-- 获取用户金钱信息-->
+    <select id="getMoneyInfoByUserId" resultType="com.xiao.money.dto.MoneyInfoDTO">
+         SELECT
+			xmi.created_by AS createdBy,
+			xmi.created_date AS createdDate,
+			xmi.updated_by AS updatedBy,
+			xmi.updated_date AS updatedDate,
+			xmi.xxw_money_info_id AS xxwMoneyInfoId,
+			xmi.user_id AS userId,
+			xmi.gold_ingot AS goldIngot,
+			xmi.silver_ingot AS silverIngot,
+			xmi.version AS version
+		FROM
+			xxw_money_info xmi
+		where xmi.user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <update id="subtractGoldIngot" parameterType="com.xiao.money.dto.MoneyInfoDTO">
+		update xxw_money_info xmi set xmi.gold_ingot = xmi.gold_ingot - #{goldIngot,jdbcType=INTEGER}
+		where xmi.userId = #{userId,jdbcType=VARCHAR}
+		and xmi.gold_ingot-#{goldIngot,jdbcType=INTEGER} <![CDATA[ >= ]]> 0
+		and xmi.version = #{version,jdbcType=INTEGER}
+    </update>
+
+    <update id="subtractSilverIngot" parameterType="com.xiao.money.dto.MoneyInfoDTO">
+		update xxw_money_info xmi set xmi.silver_ingot = xmi.silver_ingot - #{silverIngot,jdbcType=INTEGER}
+		where xmi.userId = #{userId,jdbcType=VARCHAR}
+		and xmi.silver_ingot-#{silverIngot,jdbcType=INTEGER} <![CDATA[ >= ]]> 0
+		and xmi.version = #{version,jdbcType=INTEGER}
+    </update>
+
+    <update id="addGoldIngot" parameterType="com.xiao.money.dto.MoneyInfoDTO">
+		update xxw_money_info xmi set xmi.gold_ingot = xmi.gold_ingot + #{goldIngot,jdbcType=INTEGER}
+		where xmi.userId = #{userId,jdbcType=VARCHAR}
+		and xmi.version = #{version,jdbcType=INTEGER}
+    </update>
+
+    <update id="addSilverIngot" parameterType="com.xiao.money.dto.MoneyInfoDTO">
+		update xxw_money_info xmi set xmi.silver_ingot = xmi.silver_ingot + #{silverIngot,jdbcType=INTEGER}
+		where xmi.userId = #{userId,jdbcType=VARCHAR}
+		and xmi.version = #{version,jdbcType=INTEGER}
+    </update>
+
+</mapper>

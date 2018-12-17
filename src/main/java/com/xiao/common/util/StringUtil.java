@@ -72,8 +72,8 @@ public class StringUtil {
      * @Return boolean
      **/
     public static boolean isEqual(Object a, Object b) {
-        String aStr = getString(a, "Null");
-        String bStr = getString(b, "Null");
+        String aStr = getString(a, Constants.NULL_STR);
+        String bStr = getString(b, Constants.NULL_STR);
         return aStr.equals(bStr);
     }
 
@@ -162,5 +162,18 @@ public class StringUtil {
      **/
     public static String toLowerCase(String str) {
         return transformNullStr(str).toLowerCase();
+    }
+
+    /**
+     * @Description 判定对象为空则抛异常
+     * @Author xiaoxuewang_vendor
+     * @Date 2018/12/9 12:12
+     * @Param [object, msg]
+     * @Return void
+     **/
+    public static void checkNull(Object object, String msg) throws Exception {
+        if (object == null) {
+            throw new Exception(msg);
+        }
     }
 }

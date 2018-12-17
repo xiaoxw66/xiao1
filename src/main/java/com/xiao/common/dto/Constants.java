@@ -1,5 +1,7 @@
 package com.xiao.common.dto;
 
+import sun.swing.plaf.synth.DefaultSynthStyle;
+
 public class Constants {
     // 访问成功
     public static final String SUCCESS = "0";
@@ -25,5 +27,10 @@ public class Constants {
     public static final int STRING_LENGTH_6 = 6;
     public static final int STRING_LENGTH_16 = 16;
 
+    // 道具奖池最大数
+    public static final int LOTTERY_POOL_MAX = 1000;
+
+    // 默认字符串
+    public static final String NULL_STR = "NullStr";
 
 }

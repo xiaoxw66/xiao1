@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiao.lottery.mapper.LotteryMapper">
+
+    <!-- 获取道具表所有数据-->
+    <select id="getAllProp" resultType="com.xiao.lottery.dto.PropDTO">
+         SELECT
+			xim.created_by AS createdBy,
+			xim.created_date AS createdDate,
+			xim.updated_by AS updatedBy,
+			xim.updated_date AS updatedDate,
+			xim.item_mall_id AS itemMallId,
+			xim.prop_name AS propName,
+			xim.prop_type AS propType,
+			xim.prop_image_url AS propImageUrl,
+			xim.prop_description AS propDescription,
+			xim.`order` AS 'order',
+			xim.probability as probability
+		FROM
+			xxw_item_mall xim
+    </select>
+
+</mapper>
