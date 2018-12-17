@@ -79,6 +79,7 @@ public class InitLotteryPool implements ApplicationRunner {
 
     }
 
+    // 我只是为了打日志
     private void lotteryPoolData() {
         Map<String, Integer> map = new HashMap<>();
         for (String tempPropDto : CacheHelper.LOTTERY_POOL_LIST) {

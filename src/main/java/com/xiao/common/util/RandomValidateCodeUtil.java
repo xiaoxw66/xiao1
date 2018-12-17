@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * @Description TODO
+ * @Description 随机验证码生成
  * @Author xiaoxuewang_vendor
  * @Date 2018/11/29 10:38
  */

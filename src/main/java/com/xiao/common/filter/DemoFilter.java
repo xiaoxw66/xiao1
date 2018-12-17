@@ -9,12 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
+/**
+ * @Description 过滤器暂时未使用
+ * @Author xiaoxuewang_vendor
+ * @Date 2018/12/17 15:16
+ * @Param 
+ * @Return 
+ **/
 //@Component
 public class DemoFilter implements Filter {
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
+        //  Auto-generated method stub
     }
 
     @Override
@@ -40,7 +46,7 @@ public class DemoFilter implements Filter {
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
-        // TODO Auto-generated method stub
+        //  Auto-generated method stub
     }
 
 }

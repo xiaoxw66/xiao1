@@ -8,6 +8,9 @@ import java.security.MessageDigest;
 @Slf4j
 public class MD5Util {
 
+    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+
     private static String byteArrayToHexString(byte b[]) {
         StringBuffer resultSb = new StringBuffer();
         for (int i = 0; i < b.length; i++)
@@ -29,8 +32,8 @@ public class MD5Util {
         return MD5Encode(origin, Constants.UTF8);
     }
 
-    public static String MD5EncodePassword(String origin) {
-        return MD5Encode(origin + Constants.PASSWORD_SUFFIX, Constants.UTF8);
+    public static String MD5EncodePassword(String account, String password) {
+        return MD5Encode(password + account + Constants.PASSWORD_SUFFIX, Constants.UTF8);
     }
 
     public static String MD5Encode(String origin, String charsetName) {
@@ -51,12 +54,9 @@ public class MD5Util {
         return resultString.toUpperCase();
     }
 
-    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
-
 
     public static void main(String[] args) {
-        System.out.println(MD5EncodePassword("admin")); // 21232F297A57A5A743894A0E4A801FC3
+        System.out.println(MD5EncodePassword("admin", "123456")); // 21232F297A57A5A743894A0E4A801FC3
         // 39BC1130E7BEDE0D6D5089BD77C9C976
     }
 }

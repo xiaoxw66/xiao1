@@ -1,11 +1,10 @@
 package com.xiao.lottery.dto;
 
-import com.sun.xml.internal.stream.events.EntityReferenceEvent;
 import com.xiao.common.dto.EntityDTO;
 import lombok.Data;
 
 /**
- * @Description // TODO
+ * @Description 道具表实体类
  * @Author yexiaomu
  * @Date 2018/11/30 0:33
  **/

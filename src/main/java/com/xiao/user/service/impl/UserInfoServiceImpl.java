@@ -58,7 +58,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public ResponseData loginValidate(String userAccount, String password) {
         try {
-            String passwordMd5 = MD5Util.MD5EncodePassword(password);
+            String passwordMd5 = MD5Util.MD5EncodePassword(userAccount, password);
             UserInfoDTO userInfoDTO = this.getUserInfoLogin(userAccount, passwordMd5);
             // 查询失败 为 null
             if (ItemValidate.isEmpty(userInfoDTO)) {
@@ -85,7 +85,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public ResponseData register(String userAccount, String password, String passwordConfirm) {
         UserInfoPasswordDTO userInfoPasswordDTO = new UserInfoPasswordDTO();
         try {
-            userInfoPasswordDTO.setPassword(MD5Util.MD5EncodePassword(password));
+            userInfoPasswordDTO.setPassword(MD5Util.MD5EncodePassword(userAccount, password));
             userInfoPasswordDTO.setUserAccount(userAccount);
             userInfoPasswordDTO.setCreatedBy(userAccount);
             userInfoPasswordDTO.setUpdatedBy(userAccount);
