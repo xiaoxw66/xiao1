@@ -1,6 +1,6 @@
 package com.xiao.common.aop;
 
-import com.xiao.common.dto.Constants;
+import com.xiao.common.baseDto.Constants;
 import com.xiao.common.util.ResponseUtil;
 import com.xiao.common.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;

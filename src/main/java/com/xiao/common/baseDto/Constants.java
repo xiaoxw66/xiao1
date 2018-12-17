@@ -1,6 +1,4 @@
-package com.xiao.common.dto;
-
-import sun.swing.plaf.synth.DefaultSynthStyle;
+package com.xiao.common.baseDto;
 
 public class Constants {
     // 访问成功

@@ -2,8 +2,8 @@ package com.xiao.user.controller;
 
 
 import com.xiao.common.aop.AccessAop;
-import com.xiao.common.dto.Constants;
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.Constants;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.common.util.ItemValidate;
 import com.xiao.common.util.JsonUtil;
 import com.xiao.common.util.ResponseUtil;

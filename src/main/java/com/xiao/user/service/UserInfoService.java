@@ -1,6 +1,6 @@
 package com.xiao.user.service;
 
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.user.dto.UserInfoDTO;
 
 public interface UserInfoService {

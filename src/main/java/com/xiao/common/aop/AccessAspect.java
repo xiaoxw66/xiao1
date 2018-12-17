@@ -1,7 +1,7 @@
 package com.xiao.common.aop;
 
-import com.xiao.common.dto.Constants;
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.Constants;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.common.util.StringUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

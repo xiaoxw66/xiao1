@@ -1,6 +1,6 @@
 package com.xiao.common.util;
 
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.ResponseData;
 
 public class ResponseUtil {
 

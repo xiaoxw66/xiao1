@@ -1,4 +1,4 @@
-package com.xiao.common.dto;
+package com.xiao.common.baseDto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;

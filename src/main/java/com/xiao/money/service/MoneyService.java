@@ -9,7 +9,7 @@ public interface MoneyService {
      * @Author xiaoxuewang_vendor
      * @Date 2018/12/9 11:54
      * @Param [userId]
-     * @Return com.xiao.money.dto.MoneyInfoDTO
+     * @Return com.xiao.money.baseDto.MoneyInfoDTO
      **/
     MoneyInfoDTO getMoneyInfoByUserId(String userId) throws Exception;
 

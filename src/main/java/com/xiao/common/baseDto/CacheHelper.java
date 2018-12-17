@@ -1,4 +1,4 @@
-package com.xiao.common.dto;
+package com.xiao.common.baseDto;
 
 import com.xiao.lottery.dto.PropDTO;
 

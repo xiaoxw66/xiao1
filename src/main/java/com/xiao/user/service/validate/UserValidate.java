@@ -1,7 +1,7 @@
 package com.xiao.user.service.validate;
 
-import com.xiao.common.dto.Constants;
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.Constants;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.common.util.ResponseUtil;
 import com.xiao.common.util.StringUtil;
 import com.xiao.user.service.UserInfoService;

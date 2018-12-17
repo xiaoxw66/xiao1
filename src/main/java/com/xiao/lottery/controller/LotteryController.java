@@ -1,9 +1,7 @@
 package com.xiao.lottery.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import com.xiao.common.dto.CacheHelper;
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.common.util.StringUtil;
 import com.xiao.lottery.dto.PropDTO;
 import com.xiao.lottery.service.impl.LotteryServiceImpl;

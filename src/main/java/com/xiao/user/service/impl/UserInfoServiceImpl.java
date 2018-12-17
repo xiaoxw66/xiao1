@@ -1,8 +1,8 @@
 package com.xiao.user.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.xiao.common.dto.Constants;
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.Constants;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.common.util.ItemValidate;
 import com.xiao.common.util.JsonUtil;
 import com.xiao.common.util.MD5Util;
@@ -27,7 +27,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @Author yexiaomu
      * @Date 2018/11/27 20:16
      * @Param [userAccount, password]
-     * @Return com.xiao.user.dto.UserInfoDTO
+     * @Return com.xiao.user.baseDto.UserInfoDTO
      **/
     @Override
     public UserInfoDTO getUserInfoLogin(String userAccount, String password) throws Exception {
@@ -40,7 +40,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @Author yexiaomu
      * @Date 2018/11/27 20:16
      * @Param [userAccount]
-     * @Return com.xiao.user.dto.UserInfoDTO
+     * @Return com.xiao.user.baseDto.UserInfoDTO
      **/
     @Override
     public UserInfoDTO getUserInfo(String userAccount) throws Exception {
@@ -53,7 +53,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @Author yexiaomu
      * @Date 2018/11/27 20:17
      * @Param [userAccount, password]
-     * @Return com.xiao.common.dto.ResponseData
+     * @Return com.xiao.common.baseDto.ResponseData
      **/
     @Override
     public ResponseData loginValidate(String userAccount, String password) {
@@ -103,7 +103,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @Author xiaoxuewang_vendor
      * @Date 2018/11/28 16:38
      * @Param [userAccount]
-     * @Return com.xiao.common.dto.ResponseData
+     * @Return com.xiao.common.baseDto.ResponseData
      **/
     @Override
     public ResponseData isExistAccount(String userAccount) {

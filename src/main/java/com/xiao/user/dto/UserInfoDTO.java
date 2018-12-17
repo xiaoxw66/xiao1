@@ -1,6 +1,6 @@
 package com.xiao.user.dto;
 
-import com.xiao.common.dto.EntityDTO;
+import com.xiao.common.baseDto.EntityDTO;
 import lombok.Data;
 
 @Data

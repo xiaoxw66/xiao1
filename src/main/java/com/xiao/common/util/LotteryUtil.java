@@ -1,7 +1,7 @@
 package com.xiao.common.util;
 
-import com.xiao.common.dto.CacheHelper;
-import com.xiao.common.dto.Constants;
+import com.xiao.common.baseDto.CacheHelper;
+import com.xiao.common.baseDto.Constants;
 import com.xiao.lottery.dto.PropDTO;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class LotteryUtil {
      * @Author xiaoxuewang_vendor
      * @Date 2018/12/17 15:24
      * @Param []
-     * @Return com.xiao.lottery.dto.PropDTO
+     * @Return com.xiao.lottery.baseDto.PropDTO
      **/
     public static PropDTO lotteryDraw() {
         // 随机抽奖号码,就是奖池list的索引

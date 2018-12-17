@@ -1,6 +1,6 @@
 package com.xiao.common.util;
 
-import com.xiao.common.dto.Constants;
+import com.xiao.common.baseDto.Constants;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;

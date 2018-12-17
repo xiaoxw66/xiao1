@@ -1,8 +1,8 @@
 package com.xiao.common.init;
 
 import com.alibaba.fastjson.JSON;
-import com.xiao.common.dto.CacheHelper;
-import com.xiao.common.dto.Constants;
+import com.xiao.common.baseDto.CacheHelper;
+import com.xiao.common.baseDto.Constants;
 import com.xiao.common.util.ItemValidate;
 import com.xiao.common.util.StringUtil;
 import com.xiao.lottery.dto.PropDTO;

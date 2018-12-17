@@ -1,7 +1,7 @@
 package com.xiao.user.controller;
 
-import com.xiao.common.dto.Constants;
-import com.xiao.common.dto.ResponseData;
+import com.xiao.common.baseDto.Constants;
+import com.xiao.common.baseDto.ResponseData;
 import com.xiao.common.session.SessionHelper;
 import com.xiao.common.util.*;
 import com.xiao.user.dto.UserInfoDTO;
@@ -11,12 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -35,7 +33,7 @@ public class LoginAction {
      * @Author xiaoxuewang_vendor
      * @Date 2018/11/29 11:26
      * @Param [userAccount, password, validateCode, request]
-     * @Return com.xiao.common.dto.ResponseData
+     * @Return com.xiao.common.baseDto.ResponseData
      **/
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseData login(@RequestParam("userAccount") String userAccount, @RequestParam("password") String password,
@@ -113,7 +111,7 @@ public class LoginAction {
      * @Author yexiaomu
      * @Date 2018/11/27 21:39
      * @Param [userAccount]
-     * @Return com.xiao.common.dto.ResponseData
+     * @Return com.xiao.common.baseDto.ResponseData
      **/
     @RequestMapping(value = "/isExistAccount", method = RequestMethod.GET)
     public ResponseData isExistAccount(String userAccount) {
