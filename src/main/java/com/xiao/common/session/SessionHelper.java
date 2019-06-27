@@ -15,7 +15,7 @@ public class SessionHelper {
     }
 
     /**
-     * 想map中添加一个session
+     * 向map中添加一个session
      *
      * @param userId
      * @param httpSession
